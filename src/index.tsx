@@ -13,28 +13,33 @@ import Header from './pages/Header';
 import App from './App';
 import theme from './theme';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Paper style={{ height: "200vh" }}>
-        <Container>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/movies" element={<Header />}>
-                <Route index element={<MovieSearch />} />
-                <Route path="favorites" element={<MovieFavorites />} />
-                <Route path=":movieId" element={<MovieDetails />} />
-                <Route path="*" element={<NoPage />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </Container>
-      </Paper>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Paper style={{ height: "200vh" }}>
+          <Container>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="/movies" element={<Header />}>
+                  <Route index element={<MovieSearch />} />
+                  <Route path="favorites" element={<MovieFavorites />} />
+                  <Route path=":movieId" element={<MovieDetails />} />
+                  <Route path="*" element={<NoPage />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </Container>
+        </Paper>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 
