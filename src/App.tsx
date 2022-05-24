@@ -18,6 +18,12 @@ function App() {
         >
           Learn React
         </a>
+        <a
+          className="App-link"
+          href="/movies"
+        >
+          Go to Movies
+        </a>
       </header>
     </div>
   );
