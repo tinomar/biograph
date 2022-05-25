@@ -35,7 +35,7 @@ function MovieSearch(props: Props) {
   };
 
   return (
-    <Container sx={{ height: 560 }}>
+    <Container sx={{ height: 680 }}>
       <TextField
         label="Search a movie"
         onChange={inputHandler}
@@ -49,7 +49,7 @@ function MovieSearch(props: Props) {
           )
         }}
       />
-      <div style={{ height: 400, width: '98.5%', marginTop: 5 }}>
+      <div style={{ height: 526, width: '98.5%', marginTop: 5 }}>
         <DataGrid
           sx={{
             backgroundColor: 'secondary.light',
@@ -62,8 +62,8 @@ function MovieSearch(props: Props) {
           columns={columns}
           getRowId={(row) => row.imdbID}
           disableSelectionOnClick={true}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSize={8}
+          rowsPerPageOptions={[8]}
           onRowClick={(params: GridRowParams) => navigate(`/movies/${params.id}`)}
         />
       </div>

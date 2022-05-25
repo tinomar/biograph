@@ -68,7 +68,7 @@ function MovieDetails() {
   };
 
   return (
-    <Container sx={{ height: 560 }}>
+    <Container sx={{ height: 680 }}>
       <Typography variant="h4" sx={{ pb: 2 }} component="h1">{movie?.Title}
         {!isInFavorites && <IconButton
           color="secondary"
@@ -78,11 +78,11 @@ function MovieDetails() {
           <StarIcon />
         </IconButton>}
       </Typography>
-      <Typography component="p">{movie?.Plot}</Typography>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example">
           <Tab label="Movie Details" {...a11yProps(0)} />
-          <Tab label="Poster" {...a11yProps(1)} />
+          <Tab label="Plot" {...a11yProps(1)} />
+          <Tab label="Poster" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -178,6 +178,9 @@ function MovieDetails() {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
+        <Typography component="p">{movie?.Plot}</Typography>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
         <Card variant="outlined" sx={{ maxWidth: 345 }}>
           <CardMedia
             component="img"
