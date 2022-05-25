@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Welcome to Biograph site. Dedicated to true movie fans. Enjoy.
+          Welcome to the Biograph site: Dedicated to true movie fans. Enjoy and have fun.
         </p>
         <a
           className="App-link"
