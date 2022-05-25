@@ -23,6 +23,7 @@ export default function moviesReducer(
                 term: action.term
             };
         case actions.SEARCH_MOVIES_SUCCESS:
+            console.log("Action movies", action)
             return {
                 ...state,
                 movies: action.movies

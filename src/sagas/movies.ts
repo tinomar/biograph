@@ -1,12 +1,14 @@
-import { put, fork, takeEvery } from 'redux-saga/effects';
+import { put, call, fork, takeEvery } from 'redux-saga/effects';
 import * as actionTypes from "../actionTypes/movies";
 import * as actions from '../actionCreators/movies';
 
 export interface ResponseGenerator {
     config?: any,
     data?: any,
+    body?: any,
     Search?: any,
     headers?: any,
+    json?: any,
     request?: any,
     status?: number,
     statusText?: string
@@ -14,8 +16,9 @@ export interface ResponseGenerator {
 
 function* searchMovies({ term }: actionTypes.SearchMovieRequestAction) {
     try {
-        const result: ResponseGenerator = yield fetch(`http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${term}`);
-        yield put(actions.searchMovieSuccess(result.Search));
+        const result: ResponseGenerator = yield call(fetch, `http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${term}`);
+        let data: { [key: string]: any } = yield result.json();
+        yield put(actions.searchMovieSuccess(data.Search));
     } catch (error) {
         console.error("Nastala chyba:", error);
     }
