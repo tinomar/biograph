@@ -55,7 +55,7 @@ function MovieDetails() {
     if (movieId) {
       dispatch(getMovieRequest(movieId));
     }
-  });
+  }, [movieId]);
 
   const addToFavorites = (item: any) => {
     dispatch(addFavorite(item));
@@ -67,11 +67,10 @@ function MovieDetails() {
     setValue(newValue);
   };
 
-  console.log(movie);
   return (
     <div className="MovieDetails">
       <Container maxWidth="md" sx={{ pt: 2, pb: 5 }}>
-        <Typography variant="h4" component="h1">{movie?.Title}
+        <Typography variant="h4" sx={{ pb: 2 }} component="h1">{movie?.Title}
           {!isInFavorites && <IconButton
             color="secondary"
             aria-label="add to favorites"
