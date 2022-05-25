@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Box from '@mui/material/Box';
@@ -6,9 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { searchMovieRequest } from '../actionCreators/movies';
 import { MoviesAction } from "../actionTypes/movies";
+import { RootState } from '../reducers';
 
 interface Props {
   movies: any[],
@@ -28,6 +30,7 @@ const columns: GridColDef[] = [
 
 function MovieSearch(props: Props) {
   const [inputText, setInputText] = useState("");
+  const navigate = useNavigate();
   const { onSearch, movies } = props;
 
   let inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,20 +57,28 @@ function MovieSearch(props: Props) {
       />
       <div style={{ height: 400, width: '98.5%' }}>
         <DataGrid
-          sx={{ backgroundColor: 'secondary.light' }}
+          sx={{
+            backgroundColor: 'secondary.light',
+            '& .MuiDataGrid-cell:hover': {
+              color: 'primary.main',
+              cursor: 'pointer'
+            },
+          }}
           rows={movies}
           columns={columns}
           getRowId={(row) => row.imdbID}
+          disableSelectionOnClick={true}
           pageSize={5}
           rowsPerPageOptions={[5]}
+          onRowClick={(params: GridRowParams) => navigate(`/movies/${params.id}`)}
         />
       </div>
     </Box>
   );
 }
 
-function mapStateToProps(state: { movies: { movies: any[] } }) {
-  return { movies: state.movies.movies };
+function mapStateToProps(state: RootState) {
+  return { movies: state.movies.items };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<MoviesAction>) => ({
@@ -76,4 +87,5 @@ const mapDispatchToProps = (dispatch: Dispatch<MoviesAction>) => ({
   },
 });
 
+// Use React Redux connect function to access movies store and trigger actions
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearch);

@@ -43,7 +43,7 @@ function Header() {
             to="/movies/favorites"
           >
             <FavoriteIcon />
-            Favorites
+            My Favorite Movies
           </Button>
         </div>
       </Toolbar>

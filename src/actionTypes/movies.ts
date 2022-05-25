@@ -14,7 +14,7 @@ export interface SearchMovieRequestAction {
 export const SEARCH_MOVIES_SUCCESS = "SEARCH_MOVIES_SUCCESS";
 export interface SearchMovieSuccessAction {
     type: typeof SEARCH_MOVIES_SUCCESS;
-    movies: any[]
+    items: any[]
 }
 
 export const SEARCH_MOVIES_FAILURE = "SEARCH_MOVIES_FAILURE";
@@ -22,6 +22,25 @@ export interface SearchMovieFailureAction {
     type: typeof SEARCH_MOVIES_FAILURE;
     error: Error | string;
 }
+
+export const GET_MOVIE_REQUEST = "GET_MOVIE_REQUEST";
+export interface GetMovieRequestAction {
+    type: typeof GET_MOVIE_REQUEST;
+    id: string;
+}
+
+export const GET_MOVIE_SUCCESS = "GET_MOVIE_SUCCESS";
+export interface GetMovieSuccessAction {
+    type: typeof GET_MOVIE_SUCCESS;
+    data: any
+}
+
+export const GET_MOVIE_FAILURE = "GET_MOVIE_FAILURE";
+export interface GetMovieFailureAction {
+    type: typeof GET_MOVIE_FAILURE;
+    error: Error | string;
+}
+
 
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export interface AddFavoriteAction {
@@ -32,7 +51,7 @@ export interface AddFavoriteAction {
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 export interface RemoveFavoriteAction {
     type: typeof REMOVE_FAVORITE;
-    id: number;
+    index: number;
 }
 
 export const GET_FAVORITES = "GET_FAVORITES";
@@ -45,6 +64,9 @@ export type MoviesAction =
     | SearchMovieRequestAction
     | SearchMovieSuccessAction
     | SearchMovieFailureAction
+    | GetMovieRequestAction
+    | GetMovieSuccessAction
+    | GetMovieFailureAction
     | AddFavoriteAction
     | GetFavoritesAction
     | RemoveFavoriteAction;

@@ -1,4 +1,4 @@
-import { put, call, fork, takeEvery } from 'redux-saga/effects';
+import { put, call, fork, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as actionTypes from "../actionTypes/movies";
 import * as actions from '../actionCreators/movies';
 
@@ -24,10 +24,24 @@ function* searchMovies({ term }: actionTypes.SearchMovieRequestAction) {
     }
 }
 
+function* getMovie({ id }: actionTypes.GetMovieRequestAction) {
+    try {
+        const result: ResponseGenerator = yield call(fetch, `http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&i=${id}`);
+        let data: { [key: string]: any } = yield result.json();
+        yield put(actions.getMovieSuccess(data));
+    } catch (error) {
+        console.error("Nastala chyba:", error);
+    }
+}
+
 function* watchSearchMoviesRequest(): any {
     yield takeEvery(actionTypes.SEARCH_MOVIES_REQUEST, searchMovies);
 }
 
-const userSagas = [fork(watchSearchMoviesRequest)];
+function* watchGetMovieRequest(): any {
+    yield takeLatest(actionTypes.GET_MOVIE_REQUEST, getMovie);
+}
+
+const userSagas = [fork(watchSearchMoviesRequest), fork(watchGetMovieRequest)];
 
 export default userSagas;

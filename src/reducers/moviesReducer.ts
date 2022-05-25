@@ -1,13 +1,15 @@
 import * as actions from "../actionTypes/movies";
 
 export interface MoviesState {
-    movies: any[];
+    items: any[];
+    displayedItem: any | null;
     favorites: any[];
     term: string;
 }
 
 const initialState: MoviesState = {
-    movies: [],
+    items: [],
+    displayedItem: null,
     favorites: [],
     term: ""
 };
@@ -23,10 +25,14 @@ export default function moviesReducer(
                 term: action.term
             };
         case actions.SEARCH_MOVIES_SUCCESS:
-            console.log("Action movies", action)
             return {
                 ...state,
-                movies: action.movies
+                items: action.items
+            };
+        case actions.GET_MOVIE_SUCCESS:
+            return {
+                ...state,
+                displayedItem: action.data
             };
         case actions.ADD_FAVORITE:
             return {
@@ -36,7 +42,7 @@ export default function moviesReducer(
         case actions.REMOVE_FAVORITE:
             return {
                 ...state,
-                favorites: [...state.favorites.splice(0, action.id), ...state.favorites.splice(1)],
+                favorites: [...state.favorites.splice(0, action.index), ...state.favorites.splice(1)],
             };
         default:
             return state;
