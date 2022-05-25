@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Initial Setup
+
+1. Copy `.env.example` file:
+```
+cp .env.example .env
+```
+2. Set value of REACT_APP_OMDB_API_KEY with actual OMDB API key.
+
 ## Available Scripts
 
 In the project directory, you can run:
