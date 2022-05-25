@@ -48,6 +48,10 @@ function Header() {
         </div>
       </Toolbar>
       <Outlet />
+      <Typography variant="body2" color="text.secondary" align="center">
+        {'Copyright © Martin Jánoš '}
+        {new Date().getFullYear()}.
+      </Typography>
     </AppBar>
   );
 }
