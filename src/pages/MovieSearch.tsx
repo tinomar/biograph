@@ -6,16 +6,29 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { searchMovieRequest } from '../actionCreators/movies';
 import { MoviesAction } from "../actionTypes/movies";
 
 interface Props {
+  movies: any[],
   onSearch(term: string): void;
 }
 
+const columns: GridColDef[] = [
+  { field: 'imdbID', headerName: 'IMDB ID', width: 120 },
+  { field: 'Title', headerName: 'Title', width: 600 },
+  { field: 'Type', headerName: 'Type' },
+  {
+    field: 'Year',
+    headerName: 'Year',
+    type: 'number',
+  },
+];
+
 function MovieSearch(props: Props) {
   const [inputText, setInputText] = useState("");
-  const { onSearch } = props;
+  const { onSearch, movies } = props;
 
   let inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -23,7 +36,7 @@ function MovieSearch(props: Props) {
 
   return (
     <Box sx={{
-      '& > :not(style)': { m: 1 }, height: 500,
+      '& > :not(style)': { m: 1 }, height: 550,
       backgroundColor: 'primary.dark',
     }}>
       <TextField
@@ -39,8 +52,22 @@ function MovieSearch(props: Props) {
           )
         }}
       />
+      <div style={{ height: 400, width: '98.5%' }}>
+        <DataGrid
+          sx={{ backgroundColor: 'secondary.light' }}
+          rows={movies}
+          columns={columns}
+          getRowId={(row) => row.imdbID}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+        />
+      </div>
     </Box>
   );
+}
+
+function mapStateToProps(state: { movies: { movies: any[] } }) {
+  return { movies: state.movies.movies };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<MoviesAction>) => ({
@@ -49,4 +76,4 @@ const mapDispatchToProps = (dispatch: Dispatch<MoviesAction>) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(MovieSearch);
+export default connect(mapStateToProps, mapDispatchToProps)(MovieSearch);
