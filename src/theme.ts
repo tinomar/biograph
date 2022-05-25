@@ -21,6 +21,25 @@ const theme = createTheme({
             main: orange[400],
         },
     },
+    components: {
+        MuiTab: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-selected': {
+                        color: orange[200],
+                      },
+                }
+            }
+        },
+        MuiTabs: {
+            styleOverrides: {
+                indicator: {
+                    backgroundColor: orange[200]
+                }
+            }
+        },
+    }
+
 });
 
 export default theme;
