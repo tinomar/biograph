@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
+import { Container, IconButton, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { searchMovieRequest } from '../actionCreators/movies';
@@ -38,10 +35,7 @@ function MovieSearch(props: Props) {
   };
 
   return (
-    <Box sx={{
-      '& > :not(style)': { m: 1 }, height: 550,
-      backgroundColor: 'primary.dark',
-    }}>
+    <Container sx={{ height: 560 }}>
       <TextField
         label="Search a movie"
         onChange={inputHandler}
@@ -55,7 +49,7 @@ function MovieSearch(props: Props) {
           )
         }}
       />
-      <div style={{ height: 400, width: '98.5%' }}>
+      <div style={{ height: 400, width: '98.5%', marginTop: 5 }}>
         <DataGrid
           sx={{
             backgroundColor: 'secondary.light',
@@ -73,7 +67,7 @@ function MovieSearch(props: Props) {
           onRowClick={(params: GridRowParams) => navigate(`/movies/${params.id}`)}
         />
       </div>
-    </Box>
+    </Container>
   );
 }
 

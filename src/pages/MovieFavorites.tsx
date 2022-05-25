@@ -45,13 +45,12 @@ function MovieFavorites() {
   const navigate = useNavigate();
 
   return (
-    <Container maxWidth="sm" sx={{ minHeight: 600 }}>
-      <Box sx={{ my: 4, overflow: 'scroll' }}>
-        <Typography variant="h4" component="h2" gutterBottom>
-          Favorite Movies
-        </Typography>
-      </Box>
-      <Grid container spacing={2}>
+    <Container sx={{ height: 560 }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Favorite Movies
+      </Typography>
+
+      <Grid container spacing={2} sx={{ overflow: 'scroll' }}>
         {favorites.length ? favorites.map((favorite, index) => (
           <Grid item md={3}>
             <MovieCard
