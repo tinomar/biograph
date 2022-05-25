@@ -3,16 +3,49 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFavorite } from '../actionCreators/movies';
 import { RootState } from '../reducers';
-import { Box, IconButton, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
+import { Box, IconButton, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+
+export interface DeleteConfirmationDialogProps {
+  open: boolean;
+  onClose: (isConfirmed: boolean) => void;
+}
+
+function DeleteConfirmationDialog(props: DeleteConfirmationDialogProps) {
+  const { onClose, open, ...other } = props;
+
+  const handleCancel = () => {
+    onClose(false);
+  };
+
+  const handleOk = () => {
+    onClose(true);
+  };
+
+  return (
+    <Dialog sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+      maxWidth="xs"
+      open={open}
+      {...other}>
+      <DialogTitle>Remove Favorite Movie</DialogTitle>
+      <DialogContent>Do you really want to remove this movie from favorites?</DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button onClick={handleOk}>Ok</Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
 
 interface MovieCardProps {
   posterUrl: string;
   title: string;
   index: number;
   onClick(): void;
-  onDelete(): void;
+  onDelete(index: number): void;
 }
 
 function MovieCard(props: MovieCardProps) {
@@ -32,7 +65,7 @@ function MovieCard(props: MovieCardProps) {
       </CardContent>
       <CardActions>
         <IconButton size="small" onClick={() => onClick()}><AutoStoriesIcon /></IconButton >
-        <IconButton size="small" onClick={() => onDelete()}><DeleteIcon /></IconButton >
+        <IconButton size="small" onClick={() => onDelete(index)}><DeleteIcon /></IconButton >
       </CardActions>
     </Card>
   );
@@ -43,6 +76,20 @@ function MovieFavorites() {
   const { favorites } = useSelector((state: RootState) => state.movies);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+
+  const handleDialogOpen = (favoriteIndex: number) => {
+    setSelectedIndex(favoriteIndex);
+  };
+
+  const handleDialogClose = (isConfirmed: boolean) => {
+    setSelectedIndex(-1);
+
+    if (isConfirmed) {
+      dispatch(removeFavorite(selectedIndex))
+    }
+  };
 
   return (
     <Container sx={{ height: 560 }}>
@@ -58,13 +105,17 @@ function MovieFavorites() {
               posterUrl={favorite.Poster}
               index={index}
               onClick={() => navigate(`/movies/${favorite.imdbID}`)}
-              onDelete={() => dispatch(removeFavorite(index))}
+              onDelete={handleDialogOpen}
             />
           </Grid>)) :
           <Typography variant="body2" color="text.secondary">
             Nothing to show
           </Typography>}
       </Grid>
+      <DeleteConfirmationDialog
+        open={selectedIndex > -1}
+        onClose={handleDialogClose}
+      />
     </Container>
   );
 }
