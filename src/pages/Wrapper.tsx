@@ -6,7 +6,6 @@ import {
 import { AppBar, Container, Button, Toolbar, CssBaseline, Typography } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import HomeIcon from '@mui/icons-material/Home';
 
 function Wrapper() {
 
@@ -22,15 +21,6 @@ function Wrapper() {
             Biograph
           </Typography>
           <div style={{ marginRight: "2rem" }}>
-            <Button
-              color="secondary"
-              variant="text"
-              component={RouterLink}
-              to="/"
-            >
-              <HomeIcon />
-              Introduction
-            </Button>
             <Button
               color="secondary"
               variant="text"
