@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFavorite } from '../actionCreators/movies';
-import { RootState } from '../reducers';
 import { Box, IconButton, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
@@ -73,7 +72,7 @@ function MovieCard(props: MovieCardProps) {
 
 function MovieFavorites() {
   // Use React Redux hooks to access movies store and trigger actions
-  const { favorites } = useSelector((state: RootState) => state.movies);
+  const favorites = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -98,7 +97,7 @@ function MovieFavorites() {
       </Typography>
 
       <Grid container spacing={2} sx={{ overflow: 'scroll' }}>
-        {favorites.length ? favorites.map((favorite, index) => (
+        {favorites.length ? favorites.map((favorite: any, index: number) => (
           <Grid item md={3}>
             <MovieCard
               title={favorite.Title}

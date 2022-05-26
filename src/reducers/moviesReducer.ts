@@ -18,6 +18,7 @@ export default function moviesReducer(
     state: MoviesState = initialState,
     action: actions.MoviesAction
 ): MoviesState {
+    let favorites = [];
     switch (action.type) {
         case actions.SEARCH_MOVIES_REQUEST:
             return {
@@ -35,14 +36,18 @@ export default function moviesReducer(
                 displayedItem: action.data
             };
         case actions.ADD_FAVORITE:
+            favorites = [...state.favorites, action.favorite];
+            localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
             return {
                 ...state,
-                favorites: [...state.favorites, action.favorite],
+                favorites,
             };
         case actions.REMOVE_FAVORITE:
+            favorites = [...state.favorites.splice(0, action.index), ...state.favorites.splice(1)];
+            localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
             return {
                 ...state,
-                favorites: [...state.favorites.splice(0, action.index), ...state.favorites.splice(1)],
+                favorites,
             };
         default:
             return state;
