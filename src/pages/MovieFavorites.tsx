@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeFavorite } from '../actionCreators/movies';
 import { IconButton, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import { RootState } from '../reducers';
 
 export interface DeleteConfirmationDialogProps {
   open: boolean;
@@ -72,7 +73,7 @@ function MovieCard(props: MovieCardProps) {
 
 function MovieFavorites() {
   // Use React Redux hooks to access movies store and trigger actions
-  const favorites = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
+  const { favorites } = useSelector((state: RootState) => state.movies);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

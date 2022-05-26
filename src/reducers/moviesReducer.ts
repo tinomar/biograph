@@ -10,7 +10,7 @@ export interface MoviesState {
 const initialState: MoviesState = {
     items: [],
     displayedItem: null,
-    favorites: [],
+    favorites: JSON.parse(localStorage.getItem('favoriteMovies') || '[]'),
     searchTerm: ""
 };
 
