@@ -50,7 +50,7 @@ interface MovieCardProps {
 function MovieCard(props: MovieCardProps) {
   const { posterUrl, title, index, onClick, onDelete } = props;
   return (
-    <Card variant="outlined" sx={{ maxWidth: 135 }} key={`movie-card-${index}`}>
+    <Card variant="outlined" sx={{ maxWidth: 135 }}>
       <CardMedia
         component="img"
         alt={title}
@@ -98,7 +98,7 @@ function MovieFavorites() {
 
       <Grid container spacing={2} sx={{ overflow: 'scroll' }}>
         {favorites.length ? favorites.map((favorite: any, index: number) => (
-          <Grid item md={3}>
+          <Grid item md={3} key={`movie-card-${index}`}>
             <MovieCard
               title={favorite.Title}
               posterUrl={favorite.Poster}
