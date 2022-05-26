@@ -98,7 +98,7 @@ function MovieFavorites() {
 
       <Grid container spacing={2} sx={{ overflow: 'scroll' }}>
         {favorites.length ? favorites.map((favorite: any, index: number) => (
-          <Grid item md={3} key={`movie-card-${index}`}>
+          <Grid item md={2} key={`movie-card-${index}`}>
             <MovieCard
               title={favorite.Title}
               posterUrl={favorite.Poster}
