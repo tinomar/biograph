@@ -14,6 +14,10 @@ export interface ResponseGenerator {
     statusText?: string
 }
 
+if(!process.env.REACT_APP_OMDB_API_KEY) {
+    throw new Error("OMDB API key was not specified. Check .env file.");
+}
+
 export function* searchMovies({ term }: actionTypes.SearchMovieAction) {
     try {
         yield put(actionCreators.searchMovieRequest());
