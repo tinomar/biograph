@@ -19,8 +19,9 @@ function* searchMovies({ term }: actionTypes.SearchMovieRequestAction) {
         const result: ResponseGenerator = yield call(fetch, `http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${term}`);
         let data: { [key: string]: any } = yield result.json();
         yield put(actions.searchMovieSuccess(data.Search));
-    } catch (error) {
+    } catch (error: any) {
         console.error("Nastala chyba:", error);
+        yield put({type: "MOVIE_SEARCH_FAILED", message: error.message});
     }
 }
 
@@ -29,8 +30,9 @@ function* getMovie({ id }: actionTypes.GetMovieRequestAction) {
         const result: ResponseGenerator = yield call(fetch, `http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&i=${id}`);
         let data: { [key: string]: any } = yield result.json();
         yield put(actions.getMovieSuccess(data));
-    } catch (error) {
+    } catch (error: any) {
         console.error("Nastala chyba:", error);
+        yield put({type: "GET_MOVIE_FAILED", message: error.message});
     }
 }
 

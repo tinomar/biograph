@@ -11,6 +11,7 @@ import { RootState } from '../reducers';
 
 interface Props {
   movies: any[],
+  isLoading: boolean,
   onSearch(term: string): void;
 }
 
@@ -28,7 +29,7 @@ const columns: GridColDef[] = [
 function MovieSearch(props: Props) {
   const [inputText, setInputText] = useState("");
   const navigate = useNavigate();
-  const { onSearch, movies } = props;
+  const { onSearch, movies, isLoading } = props;
 
   let inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -58,6 +59,7 @@ function MovieSearch(props: Props) {
               cursor: 'pointer'
             },
           }}
+          loading={isLoading}
           rows={movies}
           columns={columns}
           getRowId={(row) => row.imdbID}
@@ -72,7 +74,7 @@ function MovieSearch(props: Props) {
 }
 
 function mapStateToProps(state: RootState) {
-  return { movies: state.movies.items };
+  return { movies: state.movies.items, isLoading: state.isLoading.SEARCH_MOVIES };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<MoviesAction>) => ({
