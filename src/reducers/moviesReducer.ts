@@ -4,14 +4,14 @@ export interface MoviesState {
     items: any[];
     displayedItem: any | null;
     favorites: any[];
-    term: string;
+    searchTerm: string;
 }
 
 const initialState: MoviesState = {
     items: [],
     displayedItem: null,
     favorites: [],
-    term: ""
+    searchTerm: ""
 };
 
 export default function moviesReducer(
@@ -20,6 +20,11 @@ export default function moviesReducer(
 ): MoviesState {
     let favorites = [];
     switch (action.type) {
+        case actions.SEARCH_MOVIES:
+            return {
+                ...state,
+                searchTerm: action.term
+            };
         case actions.SEARCH_MOVIES_SUCCESS:
             return {
                 ...state,
@@ -38,7 +43,7 @@ export default function moviesReducer(
                 favorites,
             };
         case actions.REMOVE_FAVORITE:
-            favorites = [...state.favorites.splice(0, action.index), ...state.favorites.splice(1)];
+            favorites = [...state.favorites.slice(0, action.index), ...state.favorites.slice(action.index + 1)];
             localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
             return {
                 ...state,
