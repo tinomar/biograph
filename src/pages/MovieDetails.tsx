@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovie, addFavorite } from '../actionCreators/movies';
+import { GET_MOVIE } from "../actionTypes/movies";
 import { RootState } from '../reducers';
-import { Box, Card, CardMedia, Container, Grid, IconButton, Stack, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Card, CardMedia, Container, Grid, IconButton, Stack, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography, LinearProgress } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import InfoIcon from '@mui/icons-material/Info';
@@ -47,6 +48,7 @@ function MovieDetails() {
 
   // Use React Redux hooks to access movies store and trigger actions
   const { displayedItem: movie, favorites } = useSelector((state: RootState) => state.movies);
+  const isLoading = useSelector((state: RootState) => state.isLoading[GET_MOVIE]);
   const dispatch = useDispatch();
 
   const isInFavorites: boolean = favorites.findIndex((item: any) => item.imdbID === movieId) >= 0;
@@ -84,6 +86,7 @@ function MovieDetails() {
           <Tab label="Plot" {...a11yProps(1)} />
           <Tab label="Poster" {...a11yProps(2)} />
         </Tabs>
+        {isLoading && <LinearProgress />}
       </Box>
       <TabPanel value={value} index={0}>
         <Grid container spacing={2}>
