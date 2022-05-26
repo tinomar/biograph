@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMovieRequest, addFavorite } from '../actionCreators/movies';
 import { RootState } from '../reducers';
-import { Box, Card, CardMedia, Container, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Card, CardMedia, Container, Grid, IconButton, Stack, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import InfoIcon from '@mui/icons-material/Info';
@@ -87,8 +87,8 @@ function MovieDetails() {
       </Box>
       <TabPanel value={value} index={0}>
         <Grid container spacing={2}>
-          <Grid item xs={6} md={6}>
-            <List>
+          <Grid item sm={12}>
+            <Stack direction={{ xs: 'column', sm: 'row' }}>
               <ListItem>
                 <ListItemIcon>
                   <CalendarMonthIcon />
@@ -98,19 +98,6 @@ function MovieDetails() {
                   secondary="Year"
                 />
               </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <InfoIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={movie?.Rated}
-                  secondary="Rated"
-                />
-              </ListItem>
-            </List>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <CalendarMonthIcon />
@@ -125,14 +112,23 @@ function MovieDetails() {
                   <InfoIcon />
                 </ListItemIcon>
                 <ListItemText
+                  primary={movie?.Rated}
+                  secondary="Rated"
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText
                   primary={movie?.Runtime}
                   secondary="Runtime"
                 />
               </ListItem>
-            </List>
+            </Stack>
           </Grid>
-          <Grid item xs={6} md={6}>
-            <List>
+          <Grid item sm={12}>
+            <Stack direction={{ xs: 'column', sm: 'row' }}>
               <ListItem>
                 <ListItemIcon>
                   <InfoIcon />
@@ -151,10 +147,6 @@ function MovieDetails() {
                   secondary="Director"
                 />
               </ListItem>
-            </List>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <List>
               <ListItem>
                 <ListItemIcon>
                   <PersonIcon />
@@ -173,7 +165,7 @@ function MovieDetails() {
                   secondary="Actors"
                 />
               </ListItem>
-            </List>
+            </Stack>
           </Grid>
         </Grid>
       </TabPanel>
