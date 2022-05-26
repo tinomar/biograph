@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMovieRequest, addFavorite } from '../actionCreators/movies';
+import { getMovie, addFavorite } from '../actionCreators/movies';
 import { RootState } from '../reducers';
 import { Box, Card, CardMedia, Container, Grid, IconButton, Stack, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
@@ -53,7 +53,7 @@ function MovieDetails() {
 
   useEffect(() => {
     if (movieId) {
-      dispatch(getMovieRequest(movieId));
+      dispatch(getMovie(movieId));
     }
   }, [movieId, dispatch]);
 

@@ -1,14 +1,14 @@
 import { AnyRecord } from "dns";
 
-export const Types = {
-    SEARCH_MOVIES_REQUEST: 'SEARCH_MOVIES_REQUEST',
-    SEARCH_MOVIES_SUCCESS: 'SEARCH_MOVIES_SUCCESS'
-};
+export const SEARCH_MOVIES = "SEARCH_MOVIES";
+export interface SearchMovieAction {
+    type: typeof SEARCH_MOVIES;
+    term: string;
+}
 
 export const SEARCH_MOVIES_REQUEST = "SEARCH_MOVIES_REQUEST";
 export interface SearchMovieRequestAction {
     type: typeof SEARCH_MOVIES_REQUEST;
-    term: string;
 }
 
 export const SEARCH_MOVIES_SUCCESS = "SEARCH_MOVIES_SUCCESS";
@@ -23,10 +23,15 @@ export interface SearchMovieFailureAction {
     error: Error | string;
 }
 
+export const GET_MOVIE = "GET_MOVIE";
+export interface GetMovieAction {
+    type: typeof GET_MOVIE;
+    id: string;
+}
+
 export const GET_MOVIE_REQUEST = "GET_MOVIE_REQUEST";
 export interface GetMovieRequestAction {
     type: typeof GET_MOVIE_REQUEST;
-    id: string;
 }
 
 export const GET_MOVIE_SUCCESS = "GET_MOVIE_SUCCESS";
@@ -61,9 +66,11 @@ export interface GetFavoritesAction {
 }
 
 export type MoviesAction =
+    | SearchMovieAction
     | SearchMovieRequestAction
     | SearchMovieSuccessAction
     | SearchMovieFailureAction
+    | GetMovieAction
     | GetMovieRequestAction
     | GetMovieSuccessAction
     | GetMovieFailureAction

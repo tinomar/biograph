@@ -20,11 +20,6 @@ export default function moviesReducer(
 ): MoviesState {
     let favorites = [];
     switch (action.type) {
-        case actions.SEARCH_MOVIES_REQUEST:
-            return {
-                ...state,
-                term: action.term
-            };
         case actions.SEARCH_MOVIES_SUCCESS:
             return {
                 ...state,

@@ -5,8 +5,8 @@ import { Dispatch } from "redux";
 import { Container, IconButton, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
-import { searchMovieRequest } from '../actionCreators/movies';
-import { MoviesAction } from "../actionTypes/movies";
+import { searchMovie } from '../actionCreators/movies';
+import { MoviesAction, SEARCH_MOVIES } from "../actionTypes/movies";
 import { RootState } from '../reducers';
 
 interface Props {
@@ -74,12 +74,12 @@ function MovieSearch(props: Props) {
 }
 
 function mapStateToProps(state: RootState) {
-  return { movies: state.movies.items, isLoading: state.isLoading.SEARCH_MOVIES };
+  return { movies: state.movies.items, isLoading: state.isLoading[SEARCH_MOVIES] };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<MoviesAction>) => ({
   onSearch: (term: string) => {
-    dispatch(searchMovieRequest(term));
+    dispatch(searchMovie(term));
   },
 });
 

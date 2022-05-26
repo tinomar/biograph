@@ -1,6 +1,6 @@
 import { put, call, fork, takeEvery, takeLatest } from 'redux-saga/effects';
 import * as actionTypes from "../actionTypes/movies";
-import * as actions from '../actionCreators/movies';
+import * as actionCreators from '../actionCreators/movies';
 
 export interface ResponseGenerator {
     config?: any,
@@ -14,34 +14,34 @@ export interface ResponseGenerator {
     statusText?: string
 }
 
-function* searchMovies({ term }: actionTypes.SearchMovieRequestAction) {
+export function* searchMovies({ term }: actionTypes.SearchMovieAction) {
     try {
+        yield put(actionCreators.searchMovieRequest());
         const result: ResponseGenerator = yield call(fetch, `http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${term}`);
         let data: { [key: string]: any } = yield result.json();
-        yield put(actions.searchMovieSuccess(data.Search));
+        yield put(actionCreators.searchMovieSuccess(data.Search));
     } catch (error: any) {
-        console.error("Nastala chyba:", error);
-        yield put({type: "MOVIE_SEARCH_FAILED", message: error.message});
+        yield put(actionCreators.searchMovieFailure(error));
     }
 }
 
-function* getMovie({ id }: actionTypes.GetMovieRequestAction) {
+export function* getMovie({ id }: actionTypes.GetMovieAction) {
     try {
+        yield put(actionCreators.getMovieRequest());
         const result: ResponseGenerator = yield call(fetch, `http://omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&i=${id}`);
         let data: { [key: string]: any } = yield result.json();
-        yield put(actions.getMovieSuccess(data));
+        yield put(actionCreators.getMovieSuccess(data));
     } catch (error: any) {
-        console.error("Nastala chyba:", error);
-        yield put({type: "GET_MOVIE_FAILED", message: error.message});
+        yield put(actionCreators.getMovieFailure(error));
     }
 }
 
-function* watchSearchMoviesRequest(): any {
-    yield takeEvery(actionTypes.SEARCH_MOVIES_REQUEST, searchMovies);
+export function* watchSearchMoviesRequest(): any {
+    yield takeEvery(actionTypes.SEARCH_MOVIES, searchMovies);
 }
 
-function* watchGetMovieRequest(): any {
-    yield takeLatest(actionTypes.GET_MOVIE_REQUEST, getMovie);
+export function* watchGetMovieRequest(): any {
+    yield takeLatest(actionTypes.GET_MOVIE, getMovie);
 }
 
 const userSagas = [fork(watchSearchMoviesRequest), fork(watchGetMovieRequest)];
