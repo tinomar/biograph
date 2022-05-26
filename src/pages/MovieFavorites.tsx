@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { removeFavorite } from '../actionCreators/movies';
-import { Box, IconButton, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { IconButton, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 

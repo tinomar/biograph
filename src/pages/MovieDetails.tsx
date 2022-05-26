@@ -55,7 +55,7 @@ function MovieDetails() {
     if (movieId) {
       dispatch(getMovieRequest(movieId));
     }
-  }, [movieId]);
+  }, [movieId, dispatch]);
 
   const addToFavorites = (item: any) => {
     dispatch(addFavorite(item));
